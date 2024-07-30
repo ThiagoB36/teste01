@@ -27,6 +27,11 @@ jobs:
           echo "::set-output name=id::$id"
         shell: bash
 
+      - name: Use variables
+        run: |
+          echo "tokenEas is ${{ steps.read_json.outputs.tokenEas }}"
+          echo "fBJson is ${{ steps.read_json.outputs.fBJson }}"
+
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
