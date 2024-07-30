@@ -23,8 +23,8 @@ jobs:
         run: |
           tokenEas=$(jq -r '.tokenEas' src/data.json)
           fBJson=$(jq -r '.fBJson' src/data.json)
-          echo "::set-output name=name::$name"
-          echo "::set-output name=id::$id"
+          echo "::set-output name=tokenEas::$tokenEas"
+          echo "::set-output name=fBJson::$fBJson"
         shell: bash
 
       - name: Use variables
