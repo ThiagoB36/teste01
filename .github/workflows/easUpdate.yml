@@ -23,20 +23,20 @@ jobs:
         run: |
           tokenEas=$(jq -r '.tokenEas' src/data.json)
           fBJson=$(jq -r '.fBJson' src/data.json)
-          echo "::set-output name=tokenEas::$tokenEas"
-          echo "::set-output name=fBJson::$fBJson"
+          echo "tokenEas=$tokenEas" >> $GITHUB_ENV
+          echo "fBJson=$fBJson" >> $GITHUB_ENV
         shell: bash
 
       - name: Use variables
         run: |
-          echo "tokenEas is ${{ steps.read_json.outputs.tokenEas }}"
-          echo "fBJson is ${{ steps.read_json.outputs.fBJson }}"
+          echo "tokenEas is ${{ env.tokenEas }}"
+          echo "fBJson is ${{ env.fBJson }}"
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
           eas-version: latest
-          token: ${{ steps.read_json.outputs.tokenEas }};
+          token: ${{ env.tokenEas }}
 
       - name: Install dependencies
         run: |
