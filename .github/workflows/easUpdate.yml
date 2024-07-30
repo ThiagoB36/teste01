@@ -23,14 +23,17 @@ jobs:
         run: |
           tokenEas=$(jq -r '.tokenEas' src/data.json)
           fBJson=$(jq -r '.fBJson' src/data.json)
+          userID=$(jq -r '.userID' src/data.json)
           echo "tokenEas=$tokenEas" >> $GITHUB_ENV
           echo "fBJson=$fBJson" >> $GITHUB_ENV
+          echo "userID=$userID" >> $GITHUB_ENV
         shell: bash
 
       - name: Use variables
         run: |
           echo "tokenEas is ${{ env.tokenEas }}"
           echo "fBJson is ${{ env.fBJson }}"
+          echo "userID is ${{ env.userID }}"
 
       - name: Setup EAS
         uses: expo/expo-github-action@v8
@@ -131,7 +134,7 @@ jobs:
 
       - name: Update QR Code in Firestore
         env:
-          USERID: ${{ secrets.USERID }}
+          USERID: ${{ env.userID }}
           PROJECTID: ${{ secrets.PROJECTID }}
           QR_CODE_URL: ${{ steps.preview.outputs.qr }}
         run: |
