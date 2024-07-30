@@ -126,7 +126,7 @@ jobs:
 
       - name: Save Firebase Admin SDK credentials
         env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ env.fBJson }}
         run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq '.' > firebase-admin-sdk.json
 
       - name: Update QR Code in Firestore
