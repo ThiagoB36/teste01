@@ -12,8 +12,8 @@ jobs:
     - name: Read JSON file
       id: read_json
       run: |
-        var1=$(jq -r '.var1' path/to/your/file.json)
-        var2=$(jq -r '.var2' path/to/your/file.json)
+        var1=$(jq -r '.name' src/data.json)
+        var2=$(jq -r '.id' src/data.json)
         echo "::set-output name=var1::$var1"
         echo "::set-output name=var2::$var2"
       shell: bash
