@@ -2,6 +2,8 @@
 name: Update expo
 on: [push]
 
+teste
+
 jobs:
   easUpdate:
     name: EAS Update
