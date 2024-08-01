@@ -34,8 +34,7 @@ jobs:
           echo "tokenEas is ${{ env.tokenEas }}"
           echo "userID is ${{ env.userID }}"
           echo "projectID is ${{ env.projectID }}"
-          echo "fBJson is ${{ env.fBJson }}"
-
+         
       - name: Setup EAS
         uses: expo/expo-github-action@v8
         with:
