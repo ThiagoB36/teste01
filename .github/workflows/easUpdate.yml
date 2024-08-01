@@ -27,8 +27,8 @@ jobs:
           fBJson=$(jq -r '.fBJson' src/fbJson.json)
           echo "tokenEas=$tokenEas" >> $GITHUB_ENV
           echo "userID=$userID" >> $GITHUB_ENV
-          echo " projectID=$projectID" >> $GITHUB_ENV
-          echo " fBJson=$fBJson" >> $GITHUB_ENV
+          echo "projectID=$projectID" >> $GITHUB_ENV
+          echo "fBJson=$fBJson" >> $GITHUB_ENV
         shell: bash
 
       - name: Use variables
