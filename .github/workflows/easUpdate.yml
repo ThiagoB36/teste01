@@ -130,16 +130,16 @@ jobs:
       - name: Read file content
         id: read_file
         run: |
-          file_content=$(cat src/fbJson.json)
-          echo "::set-output name=content::$file_content"
-
+          file_content=$(jq -r '.file_content' src/data.json)
+          echo "file_content=$file_content" >> $GITHUB_ENV
+        
       - name: Use file content
         run: |
           echo "File content: ${{ steps.read_file.outputs.content }}"
 
       - name: Save Firebase Admin SDK credentials
         env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ steps.read_file.outputs.content }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ env.file_content }}
         run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq '.' > firebase-admin-sdk.json
 
       - name: Update QR Code in Firestore
