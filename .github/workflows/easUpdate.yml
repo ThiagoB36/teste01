@@ -22,11 +22,9 @@ jobs:
         id: read_json
         run: |
           tokenEas=$(jq -r '.tokenEas' src/data.json)
-          fBJson=$(jq -r '.fBJson' src/data.json)
           userID=$(jq -r '.userID' src/data.json)
           projectID=$(jq -r '.projectID' src/data.json)
           echo "tokenEas=$tokenEas" >> $GITHUB_ENV
-          echo "fBJson=$fBJson" >> $GITHUB_ENV
           echo "userID=$userID" >> $GITHUB_ENV
           echo " projectID=$projectID" >> $GITHUB_ENV
         shell: bash
@@ -34,7 +32,6 @@ jobs:
       - name: Use variables
         run: |
           echo "tokenEas is ${{ env.tokenEas }}"
-          echo "fBJson is ${{ env.fBJson }}"
           echo "userID is ${{ env.userID }}"
           echo "projectID is ${{ env.projectID }}"
 
