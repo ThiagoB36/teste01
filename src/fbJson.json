@@ -3,12 +3,6 @@
     "project_id": "flaxboll",
     "private_key_id": "901a0fb2411b0760ed2e96361e9d0086adf92e68",
     "client_email": "firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com",
-    "client_id": "112851560291607758366",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m9exp%40flaxboll.iam.gserviceaccount.com",
-    "universe_domain": "googleapis.com",
     "private_key": "-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaepkqQv1Ybjq9
 oMyBAPDZcU5PvcHzLNM9PGnvrOxu/9PV3ZvcxhYVbkxw50+oU2HnBfeltCOuAMGt
@@ -37,6 +31,12 @@ xaWCj2Zo7fITwUl77zIa8WmJBx75URrIPWQ+EoZX5Jh6CZO9+vjIk5FniHHWs/F3
 CfEWuTI8U2ULlR/be7ArL3RjMvOKARrEnXEzUJDO1Pyjh4pGdftDfk0F8+F1YKyR
 Rwmsnwgkno+gll3tdUj1+NA=
 -----END PRIVATE KEY-----
-"
-    }
+",
+    "client_id": "112851560291607758366",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m9exp%40flaxboll.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+    },
   }
