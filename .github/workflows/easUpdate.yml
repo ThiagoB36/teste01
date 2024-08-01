@@ -138,7 +138,7 @@ jobs:
       - name: Update QR Code in Firestore
         env:
           USERID: ${{ env.userID }}
-          PROJECTID: ${{ envi.projectID }}
+          PROJECTID: ${{ env.projectID }}
           QR_CODE_URL: ${{ steps.preview.outputs.qr }}
         run: |
           node -e "
