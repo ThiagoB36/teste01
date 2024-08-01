@@ -1,46 +1,5 @@
 {
-  "tokenEas": "Et3iYIoDnKOv7AnzwcXu3xGf0dZjVctFgEKa5cj0",
-  "userID": "3v6tpX9EEgFQ7Wpd0Wfp",
-  "projectID": "gdvlrF8Pt8EcqJOStUSR",
-  "fBJson": {
-    "type": "service_account",
-    "project_id": "flaxboll",
-    "private_key_id": "901a0fb2411b0760ed2e96361e9d0086adf92e68",
-    "private_key": "-----BEGIN PRIVATE KEY-----
-MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaepkqQv1Ybjq9
-oMyBAPDZcU5PvcHzLNM9PGnvrOxu/9PV3ZvcxhYVbkxw50+oU2HnBfeltCOuAMGt
-f+H4ivL+w9ZOT5SZ0d3P9KtnsUDTrPWD1RV3PkXfBn4aGW5RsVT6sIQ/HvF3DPqQ
-186NuxruvGudDZLNkGlMkKTRYEIkYQBwJk5LeYHB3gKgibk0TBxv4iQ99btFagA3
-sSnz83EVJxtKSfEMWpaOt6PJVjTrGiqg3bnNmbwaTGf4Ayp65SGhRVPqrH+XMCaY
-EYHvaF1aiK2wClxCW21sBxPjzRWL5k5cSffkd5Q6771tzGErxUlV0PxVk0P3bNZ3
-yVqmh0jJAgMBAAECggEAAeYlC6xZ0YcrLffGViNKK39j++/hzjBfDfT91Lv8sUKV
-2yQaMKVs/G2zgRtwdL2YzJwNT8pV1epHVvjwqM+/OxnOhthxPAFTe5nA5stU1o/j
-zP5VgsnA/m99OdK06GooZJQBM2iuqMK/noRAjAHT+eMbzuu7fySh1tGaLkm3Qpqs
-Q1hJ/erPJ7AuMnRDsuoyAgkx7hO4TsyjVHqyiWJujzNdLfL+Eem4Nq1i18U6izp6
-dBRBCgoDeyW8HeamCQ+Gxvliipp/aOUI/v0nvKN+FTMyFaBR9qmt9pM4HZuGulCQ
-rbBRVK6AGcAdDT9hmfj3kVIi1vHTY2chk9ehaU5sAQKBgQD9AVbM0ihBxAa2DME1
-Y8y1yRfd/PraCq+DFlsM6BB9hBSH12R2U4grSUx2F8vqgI0R6NzO0VF7a7Zlo3J3
-dBreJvpFUKrVE59JZv7CJZvfwtrq6EDp0s3gVjYhGS2RUie+9vww0mzmNCegza09
-tKLFW4uElZYlCyrXC27uc3zdyQKBgQDdEKMOVWweGETw70Ecd5hgrFk7gaB5DiIl
-knIQz76jnAVnjispGex1r5gDebe7XUikIv86RRgX15wFgu1ekqfL51yDOitj+UU4
-eWQ28OPjdOKhcawpzOaKb1OCzqLVKF/2rT4KKRG+USiAbHAp0p89Qng+F/cxcDak
-n5aPmjCTAQKBgQCNsw9LPbTgSIq9sV0Qqul/MrZUVRilv/BWydGK4/pAYhYhkqgo
-gVY1cCMLzP4fQ4o+6p2ok6FAL66DNEyqzHMz0r6+zZQwLII82Rt73xZy9y4m/JdG
-nhNCPuaoGPLlfg7WrHvIWEI3mCRNsoQBmEbFpCT6x9DExIFk2XlywWnAyQKBgER3
-xKjJ2ESx65hb4eS5Pd6jQrflfBhCQl00sFN4pGj0B9B8/e0q9Eu26PQanMdRKxB7
-LmWTxNSNmOs0E+S4s3O54rNaLto1+DR3lIxXq51lNFQgatw/dB/oPwtCiLhQWviB
-y7dF5RL2+/5al5q8e0lz7t38ejk7shDmxLERZn4BAoGAH6WSzkyAVyHLVVl1RTgr
-xaWCj2Zo7fITwUl77zIa8WmJBx75URrIPWQ+EoZX5Jh6CZO9+vjIk5FniHHWs/F3
-CfEWuTI8U2ULlR/be7ArL3RjMvOKARrEnXEzUJDO1Pyjh4pGdftDfk0F8+F1YKyR
-Rwmsnwgkno+gll3tdUj1+NA=
------END PRIVATE KEY-----
-",
-    "client_email": "firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com",
-    "client_id": "112851560291607758366",
-    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-    "token_uri": "https://oauth2.googleapis.com/token",
-    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m9exp%40flaxboll.iam.gserviceaccount.com",
-    "universe_domain": "googleapis.com"
+  "tokenEas": "",
+  "userID": "",
+  "projectID": ""
   }
-}
