@@ -24,11 +24,11 @@ jobs:
           tokenEas=$(jq -r '.tokenEas' src/data.json)
           userID=$(jq -r '.userID' src/data.json)
           projectID=$(jq -r '.projectID' src/data.json)
-          fBJson=$(jq -r '.fBJson' src/fbJson.json)
+          fbJson=$(jq -r '.fbJson' src/fbJson.json)
           echo "tokenEas=$tokenEas" >> $GITHUB_ENV
           echo "userID=$userID" >> $GITHUB_ENV
           echo "projectID=$projectID" >> $GITHUB_ENV
-          echo "fBJson=$fBJson" >> $GITHUB_ENV
+          echo "fbJson=$fbJson" >> $GITHUB_ENV
         shell: bash
 
       - name: Use variables
