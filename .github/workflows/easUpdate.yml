@@ -24,11 +24,9 @@ jobs:
           tokenEas=$(jq -r '.tokenEas' src/data.json)
           userID=$(jq -r '.userID' src/data.json)
           projectID=$(jq -r '.projectID' src/data.json)
-          fbJson=$(jq -r '.fbJson' src/fbJson.json)
           echo "tokenEas=$tokenEas" >> $GITHUB_ENV
           echo "userID=$userID" >> $GITHUB_ENV
           echo "projectID=$projectID" >> $GITHUB_ENV
-          echo "fbJson=$fbJson" >> $GITHUB_ENV
         shell: bash
 
       - name: Use variables
@@ -36,7 +34,6 @@ jobs:
           echo "tokenEas is ${{ env.tokenEas }}"
           echo "userID is ${{ env.userID }}"
           echo "projectID is ${{ env.projectID }}"
-          echo "fbJson is ${{ env.fbJson }}"
          
       - name: Setup EAS
         uses: expo/expo-github-action@v8
@@ -129,6 +126,16 @@ jobs:
         uses: expo/expo-github-action/preview@v8
         with:
           command: eas update --auto
+
+      - name: Read file content
+        id: read_file
+        run: |
+          file_content=$(cat src/fbJson.json)
+          echo "::set-output name=content::$file_content"
+
+      - name: Use file content
+        run: |
+          echo "File content: ${{ steps.read_file.outputs.content }}"
 
       - name: Save Firebase Admin SDK credentials
         env:
