@@ -1,3 +1,4 @@
+
 name: Update expo
 on: [push]
 
@@ -45,9 +46,8 @@ jobs:
           yarn install
           sudo apt-get update && sudo apt-get install -y expect
 
-      - name: Install firebase-admin
-        run: |
-          npm install firebase-admin
+      - name: Install firebase
+        run: npm install firebase-admin
 
       - name: Create expect script
         run: |
@@ -127,70 +127,53 @@ jobs:
         with:
           command: eas update --auto
 
-      - name: Run update script
+      - name: Read file content
+        id: read_file
+        run: |
+          file_content=$(jq -r '.file_content' src/fbJson.json)
+          echo "file_content=$file_content" >> $GITHUB_ENV
+        
+      - name: Use file content
+        run: |
+          echo "File content: ${{ steps.read_file.outputs.content }}"
+
+      - name: Save Firebase Admin SDK credentials
         env:
-          tokenEas: ${{ env.tokenEas }}
-          userID: ${{ env.userID }}
-          projectID: ${{ env.projectID }}
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq '.' > firebase-admin-sdk.json
+
+      - name: Update QR Code in Firestore
+        env:
+          USERID: ${{ env.userID }}
+          PROJECTID: ${{ env.projectID }}
           QR_CODE_URL: ${{ steps.preview.outputs.qr }}
-          FIREBASE_PRIVATE_KEY: |
-            -----BEGIN PRIVATE KEY-----
-            MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaepkqQv1Ybjq9
-            oMyBAPDZcU5PvcHzLNM9PGnvrOxu/9PV3ZvcxhYVbkxw50+oU2HnBfeltCOuAMGt
-            f+H4ivL+w9ZOT5SZ0d3P9KtnsUDTrPWD1RV3PkXfBn4aGW5RsVT6sIQ/HvF3DPqQ
-            186NuxruvGudDZLNkGlMkKTRYEIkYQBwJk5LeYHB3gKgibk0TBxv4iQ99btFagA3
-            sSnz83EVJxtKSfEMWpaOt6PJVjTrGiqg3bnNmbwaTGf4Ayp65SGhRVPqrH+XMCaY
-            EYHvaF1aiK2wClxCW21sBxPjzRWL5k5cSffkd5Q6771tzGErxUlV0PxVk0P3bNZ3
-            yVqmh0jJAgMBAAECggEAAeYlC6xZ0YcrLffGViNKK39j++/hzjBfDfT91Lv8sUKV
-            2yQaMKVs/G2zgRtwdL2YzJwNT8pV1epHVvjwqM+/OxnOhthxPAFTe5nA5stU1o/j
-            zP5VgsnA/m99OdK06GooZJQBM2iuqMK/noRAjAHT+eMbzuu7fySh1tGaLkm3Qpqs
-            Q1hJ/erPJ7AuMnRDsuoyAgkx7hO4TsyjVHqyiWJujzNdLfL+Eem4Nq1i18U6izp6
-            dBRBCgoDeyW8HeamCQ+Gxvliipp/aOUI/v0nvKN+FTMyFaBR9qmt9pM4HZuGulCQ
-            rbBRVK6AGcAdDT9hmfj3kVIi1vHTY2chk9ehaU5sAQKBgQD9AVbM0ihBxAa2DME1
-            Y8y1yRfd/PraCq+DFlsM6BB9hBSH12R2U4grSUx2F8vqgI0R6NzO0VF7a7Zlo3J3
-            dBreJvpFUKrVE59JZv7CJZvfwtrq6EDp0s3gVjYhGS2RUie+9vww0mzmNCegza09
-            tKLFW4uElZYlCyrXC27uc3zdyQKBgQDdEKMOVWweGETw70Ecd5hgr
-            -----END PRIVATE KEY-----
-          NODE_OPTIONS: "--max-old-space-size=8192" # Ajuste se necessário
         run: |
           node -e "
-            const admin = require('firebase-admin');
+          const admin = require('firebase-admin');
+          const serviceAccount = require('./firebase-admin-sdk.json');
 
-            const serviceAccount = {
-              type: 'service_account',
-              project_id: 'flaxboll',
-              private_key_id: '901a0fb2411b0760ed2e96361e9d0086adf92e68',
-              private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-              client_email: 'firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com',
-              client_id: '112851560291607758366',
-              auth_uri: 'https://accounts.google.com/o/oauth2/auth',
-              token_uri: 'https://oauth2.googleapis.com/token',
-              auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
-              client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com',
-              universe_domain: 'googleapis.com'
-            };
+          admin.initializeApp({
+            credential: admin.credential.cert(serviceAccount)
+          });
 
-            admin.initializeApp({
-              credential: admin.credential.cert(serviceAccount)
+          const db = admin.firestore();
+
+          const updateQrCode = async () => {
+            const userId = process.env.USERID;
+            const projectId = process.env.PROJECTID;
+            const qrCodeUrl = process.env.QR_CODE_URL;
+
+            console.log({userId})
+            console.log({projectId})
+
+            const docRef = db.collection('users').doc(userId).collection  ('projects').doc(projectId);
+            await docRef.update({
+              qrcodeUrl: qrCodeUrl
             });
 
-            const db = admin.firestore();
+            console.log('QR Code updated successfully.');
+          };
 
-            const updateQrCode = async () => {
-              const userId = process.env.USERID;
-              const projectId = process.env.PROJECTID;
-              const qrCodeUrl = process.env.QR_CODE_URL;
-
-              console.log({ userId });
-              console.log({ projectId });
-
-              const docRef = db.collection('users').doc(userId).collection('projects').doc(projectId);
-              await docRef.update({
-                qrcodeUrl: qrCodeUrl
-              });
-
-              console.log('QR Code updated successfully.');
-            };
-
-            updateQrCode().catch(console.error);
+          updateQrCode().catch(console.error);
           "
+    
