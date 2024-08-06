@@ -45,8 +45,9 @@ jobs:
           yarn install
           sudo apt-get update && sudo apt-get install -y expect
 
-      - name: Install firebase
-        run: npm install firebase-admin
+      - name: Install firebase-admin
+        run: |
+          npm install firebase-admin
 
       - name: Create expect script
         run: |
