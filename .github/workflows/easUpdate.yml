@@ -137,11 +137,6 @@ jobs:
         run: |
           echo "File content: ${{ steps.read_file.outputs.content }}"
 
-      - name: Save Firebase Admin SDK credentials
-        env:
-          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-        run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq '.' > firebase-admin-sdk.json
-
       - name: Run Firebase Script
         env:
             USERID: ${{ env.userID }}
