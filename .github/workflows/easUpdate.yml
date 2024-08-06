@@ -130,7 +130,7 @@ jobs:
       - name: Read file content
         id: read_file
         run: |
-          file_content=$(jq -r '.file_content' src/fbJson.json)
+          file_content=$(jq -r '.file_content' .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json)
           echo "file_content=$file_content" >> $GITHUB_ENV
         
       - name: Use file content
