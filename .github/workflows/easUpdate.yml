@@ -127,16 +127,6 @@ jobs:
         with:
           command: eas update --auto
 
-      - name: Read file content
-        id: read_file
-        run: |
-          file_content=$(jq -r '.file_content' src/fbJson.json)
-          echo "file_content=$file_content" >> $GITHUB_ENV
-        
-      - name: Use file content
-        run: |
-          echo "File content: ${{ steps.read_file.outputs.content }}"
-
       - name: Run Firebase Script
         env:
             USERID: ${{ env.userID }}
