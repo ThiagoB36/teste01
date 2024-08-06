@@ -1,4 +1,3 @@
-
 name: Update expo
 on: [push]
 
@@ -127,48 +126,50 @@ jobs:
         with:
           command: eas update --auto
 
-      - name: Read file content
-        id: read_file
-        run: |
-          cat .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json | jq -Rs . > firebase-admin-sdk.json
-          file_content=$(cat firebase-admin-sdk.json)
-          echo "file_content=$file_content" >> $GITHUB_ENV
-        
-      - name: Use file content
-        run: |
-          echo "File content: ${{ env.file_content }}"
-
-      - name: Update QR Code in Firestore
+      - name: Run update script
         env:
           USERID: ${{ env.userID }}
           PROJECTID: ${{ env.projectID }}
           QR_CODE_URL: ${{ steps.preview.outputs.qr }}
         run: |
           node -e "
-          const admin = require('firebase-admin');
-          const serviceAccount = JSON.parse(process.env.file_content);
+            const admin = require('firebase-admin');
 
-          admin.initializeApp({
-            credential: admin.credential.cert(serviceAccount)
-          });
+            const serviceAccount = {
+              type: 'service_account',
+              project_id: 'flaxboll',
+              private_key_id: '901a0fb2411b0760ed2e96361e9d0086adf92e68',
+              private_key: '-----BEGIN PRIVATE KEY-----\\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDaepkqQv1Ybjq9\\noMyBAPDZcU5PvcHzLNM9PGnvrOxu/9PV3ZvcxhYVbkxw50+oU2HnBfeltCOuAMGt\\nf+H4ivL+w9ZOT5SZ0d3P9KtnsUDTrPWD1RV3PkXfBn4aGW5RsVT6sIQ/HvF3DPqQ\\n186NuxruvGudDZLNkGlMkKTRYEIkYQBwJk5LeYHB3gKgibk0TBxv4iQ99btFagA3\\nsSnz83EVJxtKSfEMWpaOt6PJVjTrGiqg3bnNmbwaTGf4Ayp65SGhRVPqrH+XMCaY\\nEYHvaF1aiK2wClxCW21sBxPjzRWL5k5cSffkd5Q6771tzGErxUlV0PxVk0P3bNZ3\\nyVqmh0jJAgMBAAECggEAAeYlC6xZ0YcrLffGViNKK39j++/hzjBfDfT91Lv8sUKV\\n2yQaMKVs/G2zgRtwdL2YzJwNT8pV1epHVvjwqM+/OxnOhthxPAFTe5nA5stU1o/j\\nzP5VgsnA/m99OdK06GooZJQBM2iuqMK/noRAjAHT+eMbzuu7fySh1tGaLkm3Qpqs\\nQ1hJ/erPJ7AuMnRDsuoyAgkx7hO4TsyjVHqyiWJujzNdLfL+Eem4Nq1i18U6izp6\\ndBRBCgoDeyW8HeamCQ+Gxvliipp/aOUI/v0nvKN+FTMyFaBR9qmt9pM4HZuGulCQ\\nrbBRVK6AGcAdDT9hmfj3kVIi1vHTY2chk9ehaU5sAQKBgQD9AVbM0ihBxAa2DME1\\nY8y1yRfd/PraCq+DFlsM6BB9hBSH12R2U4grSUx2F8vqgI0R6NzO0VF7a7Zlo3J3\\ndBreJvpFUKrVE59JZv7CJZvfwtrq6EDp0s3gVjYhGS2RUie+9vww0mzmNCegza09\\ntKLFW4uElZYlCyrXC27uc3zdyQKBgQDdEKMOVWweGETw70Ecd5hgr3yDh4ePqRp7\\nH/Vm0ZbbUqVcbt1aAcrn+xqGhL9CvUbtr/kLUyxYJa9bTTXZt/38ZcXtsGqEYjxP\\nEwGEFWZGZVx6Vcp/tRMpZmL+/sXIrNSWYNXtXPsmft5xfwRSgl2pP9kMoMkrEByh\\nXKQz3f70AQKBgQChFGPOJ7lXFOwJKZx+EOYEOxlUeqN1P1PtIBScTYyND5Lv0FMm\\nq9l2og5BhJpg4HxlmNf7RvvHbaWWxBd+QFtmMZ5hQk46wS46Rt63UyOfOgeOfif2\\nF5cKdoSCfoq9LVq29WaT2qLKnHhPOmKH55Ay51tXkIqcxPTVtJzK7n5JkQKBgQDG\\nlzYH7FCd35arwuwM0GL5zXKNdAM2B/oE+LHQmtyCAV5D4x6ubdT/4OYYiPVZnTeH\\nAKLaHaWAcbY9PblgMoX5PwnJ+zSD2WWFCybpBFPrH+gukXfWIRAN77OCDN+UEBpN\\nv4ngNQkl2XbQAJk26RMg98pZoXlI0fFHrJk7WfTwAQKBgQDEJdBbx8zJdK04jQ+v\\nmE65GURSP7vvlQk8n8+mQiX5IzFS3fgmCKK8nLf8P5k+eiDphDJyU3fokWi2Wcdp\\nV3SD6tDttFgq0U1EVKmpzpphPCmtV6zV6VpmeKsDZfX2lPC3rF5l8yY5aSpUpdkz\\nkzAq8NLn/9N54VSGiaUTm3sfRAoGBALJ+YZq9XW0so3/tNKdWmSLksoq0A7rjZZN\\n1tQHHnssCpZWcWwWxZy1l7i2vKmGuS0AuAhukznjMrZjC0gM4K5uJ8Y6IBS02zpo\\n6XfoFXDZaydtYs5svmch2tG5PlR6KY7sBaFeGNSVJAjLTMhISFnUI7CUgDDNn0QU\\nre9VuQqv
+              client_email: 'firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com',
+              client_id: '112851560291607758366',
+              auth_uri: 'https://accounts.google.com/o/oauth2/auth',
+              token_uri: 'https://oauth2.googleapis.com/token',
+              auth_provider_x509_cert_url: 'https://www.googleapis.com/oauth2/v1/certs',
+              client_x509_cert_url: 'https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-m9exp@flaxboll.iam.gserviceaccount.com',
+              universe_domain: 'googleapis.com'
+            };
 
-          const db = admin.firestore();
-
-          const updateQrCode = async () => {
-            const userId = process.env.USERID;
-            const projectId = process.env.PROJECTID;
-            const qrCodeUrl = process.env.QR_CODE_URL;
-
-            console.log({userId})
-            console.log({projectId})
-
-            const docRef = db.collection('users').doc(userId).collection('projects').doc(projectId);
-            await docRef.update({
-              qrcodeUrl: qrCodeUrl
+            admin.initializeApp({
+              credential: admin.credential.cert(serviceAccount)
             });
 
-            console.log('QR Code updated successfully.');
-          };
+            const db = admin.firestore();
 
-          updateQrCode().catch(console.error);
+            const updateQrCode = async () => {
+              const userId = process.env.USERID;
+              const projectId = process.env.PROJECTID;
+              const qrCodeUrl = process.env.QR_CODE_URL;
+
+              console.log({ userId });
+              console.log({ projectId });
+
+              const docRef = db.collection('users').doc(userId).collection('projects').doc(projectId);
+              await docRef.update({
+                qrcodeUrl: qrCodeUrl
+              });
+
+              console.log('QR Code updated successfully.');
+            };
+
+            updateQrCode().catch(console.error);
           "
