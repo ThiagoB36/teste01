@@ -130,8 +130,8 @@ jobs:
       - name: Read file content
         id: read_file
         run: |
-          cp .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json firebase-admin-sdk.json
-          echo "file_content=$(cat firebase-admin-sdk.json)" >> $GITHUB_ENV
+          file_content=$(cat .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json | jq -Rs .)
+          echo "file_content=$file_content" >> $GITHUB_ENV
         
       - name: Use file content
         run: |
