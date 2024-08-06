@@ -1,20 +1,14 @@
-// update-firebase.js
-const firebase = require('firebase/app');
-require('firebase/firestore');
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore } = require('firebase-admin/firestore');
+const serviceAccount = require('./firebase-admin-sdk.json');
 
-const firebaseConfig = {
-  apiKey: "AIzaSyCaZlTO1nedyM_hDmbFHEkQ0N8bQ9JkWLw",
-  authDomain: "flaxboll.firebaseapp.com",
-  projectId: "flaxboll",
-  storageBucket: "flaxboll.appspot.com",
-  messagingSenderId: "707022923688",
-  appId: "1:707022923688:web:62d8bd5e16f18da3d69f9d",
-  measurementId: "G-FEXXR0BBNQ"
-};
+// Inicialize o Firebase Admin SDK
+initializeApp({
+  credential: cert(serviceAccount)
+});
 
-firebase.initializeApp(firebaseConfig);
-
-const db = firebase.firestore();
+// Obtenha a referência do Firestore
+const db = getFirestore();
 
 const updateQrCode = async () => {
   const userId = process.env.USERID;
