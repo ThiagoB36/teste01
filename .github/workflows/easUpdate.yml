@@ -130,7 +130,8 @@ jobs:
       - name: Read file content
         id: read_file
         run: |
-          file_content=$(cat .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json | jq -Rs .)
+          cat .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json | jq -Rs . > firebase-admin-sdk.json
+          file_content=$(cat firebase-admin-sdk.json)
           echo "file_content=$file_content" >> $GITHUB_ENV
         
       - name: Use file content
@@ -145,7 +146,7 @@ jobs:
         run: |
           node -e "
           const admin = require('firebase-admin');
-          const serviceAccount = require('./firebase-admin-sdk.json');
+          const serviceAccount = JSON.parse(process.env.file_content);
 
           admin.initializeApp({
             credential: admin.credential.cert(serviceAccount)
@@ -161,7 +162,7 @@ jobs:
             console.log({userId})
             console.log({projectId})
 
-            const docRef = db.collection('users').doc(userId).collection  ('projects').doc(projectId);
+            const docRef = db.collection('users').doc(userId).collection('projects').doc(projectId);
             await docRef.update({
               qrcodeUrl: qrCodeUrl
             });
