@@ -144,5 +144,5 @@ jobs:
 
       - name: Run Firebase Script
         run: |
-          node update-firebase.js
+          node src/update-firebase.js
     
