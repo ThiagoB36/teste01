@@ -130,17 +130,17 @@ jobs:
       - name: Read file content
         id: read_file
         run: |
-          file_content=$(jq -r '.file_content' .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json)
+          file_content=$(cat .flaxboll/flaxboll-firebase-adminsdk-m9exp-901a0fb241.json | jq -Rs .)
           echo "file_content=$file_content" >> $GITHUB_ENV
         
       - name: Use file content
         run: |
-          echo "File content: ${{ steps.read_file.outputs.content }}"
+          echo "File content: ${{ env.file_content }}"
 
       - name: Save Firebase Admin SDK credentials
         env:
           FIREBASE_SERVICE_ACCOUNT: ${{ env.file_content }}
-        run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq '.' > firebase-admin-sdk.json
+        run: echo "$FIREBASE_SERVICE_ACCOUNT" | jq -r 'fromjson' > firebase-admin-sdk.json
 
       - name: Update QR Code in Firestore
         env:
