@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": teste01,
-    "slug": teste01,
+    "name": "teste01",
+    "slug": "teste01",
     "scheme": "returnsite",
     "version": "1.0.0",
     "orientation": "portrait",
